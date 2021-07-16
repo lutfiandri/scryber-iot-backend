@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const { db } = require('../utils/firebase');
 const sensorsSplitter = require('../utils/sensorsSplitter');
+const fetch = require('node-fetch');
 
 // baseurl: /sensors
 
@@ -26,6 +27,18 @@ router.get('/update', async (req, res) => {
     const data = sensorsSplitter(req.query.data);
     await docRef.set(data);
     res.json({ error: '' });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+
+router.get('/dummy', async (req, res) => {
+  try {
+    const response = await fetch(
+      'https://scryber-iot-backend.vercel.app/sensors/update/?data=9;8;7;6;5;4;3;2'
+    );
+    const responseJson = await response.json();
+    res.json({ data: 'ok aman' });
   } catch (error) {
     res.json({ error: error.message });
   }
