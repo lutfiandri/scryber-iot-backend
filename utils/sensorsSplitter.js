@@ -1,6 +1,7 @@
 function sensorsSplitter(raw) {
   const arrayData = raw.split(',').map((data) => Number(data));
   const data = {
+    created_at: new Date(),
     e_current: arrayData[0],
     gas_produced: arrayData[1],
     gas_used: arrayData[2],
