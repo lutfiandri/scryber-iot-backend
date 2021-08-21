@@ -38,7 +38,7 @@ router.post('/daily', async (req, res) => {
   try {
     await db
       .collection('sensors')
-      .where('created_at', '>=', yesterdayStart)
+      .where('created_at', '>', yesterdayStart)
       .where('created_at', '<=', yesterdayEnd)
       .get()
       .then((querySnapshot) => {
@@ -47,9 +47,62 @@ router.post('/daily', async (req, res) => {
           sensorsData.push(doc.data());
         });
 
-        const averageSensorsData = sensorsAverage(sensorsData, yesterdayEnd);
+        const averageSensorsData = sensorsAverage(
+          sensorsData,
+          yesterdayStart,
+          yesterdayEnd
+        );
 
         db.collection('sensors_daily')
+          .add(averageSensorsData)
+          .then(() =>
+            res.json({
+              status: 'success',
+              error: '',
+            })
+          );
+      });
+  } catch (error) {
+    res.json({
+      status: 'error',
+      error: error.message,
+    });
+  }
+});
+
+router.post('/weekly', async (req, res) => {
+  const today = new Date(); // 00:01 malam
+  const lastSundayEnd = new Date(
+    today -
+      (today.getDay() - 1) * 24 * 60 * 60 * 1000 -
+      today.getHours() * 60 * 60 * 1000 -
+      today.getMinutes() * 60 * 1000 -
+      today.getSeconds() * 1000 -
+      1000 // biar 23.59.59
+  );
+  const lastSundayStart = new Date(lastSundayEnd - 7 * 24 * 60 * 60 * 1000);
+
+  try {
+    await db
+      .collection('sensors_daily')
+      .where('time_end_at', '>', lastSundayStart)
+      .where('time_end_at', '<=', lastSundayEnd)
+      .get()
+      .then((querySnapshot) => {
+        const sensorsData = [];
+        querySnapshot.forEach((doc) => {
+          sensorsData.push(doc.data());
+        });
+
+        const averageSensorsData = sensorsAverage(
+          sensorsData,
+          lastSundayStart,
+          lastSundayEnd
+        );
+
+        console.log(sensorsData);
+
+        db.collection('sensors_weekly')
           .add(averageSensorsData)
           .then(() =>
             res.json({

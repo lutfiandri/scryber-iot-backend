@@ -1,0 +1,8 @@
+@baseurl = http://localhost:5000
+
+### add daily average
+POST {{baseurl}}/sensors/daily
+
+### add weekny average
+
+POST {{baseurl}}/sensors/weekly

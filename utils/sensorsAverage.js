@@ -1,7 +1,8 @@
-const sensorsAverage = (sensors, timeEnd) => {
+const sensorsAverage = (sensors, timeStart, timeEnd) => {
   const n = sensors.length;
 
   const total = {
+    time_start_at: timeStart,
     time_end_at: timeEnd,
     e_current: 0,
     gas_produced: 0,
@@ -27,6 +28,7 @@ const sensorsAverage = (sensors, timeEnd) => {
   });
 
   const average = {
+    time_start_at: total.time_start_at,
     time_end_at: total.time_end_at,
     e_current: total.e_current / n,
     gas_produced: total.gas_produced / n,
