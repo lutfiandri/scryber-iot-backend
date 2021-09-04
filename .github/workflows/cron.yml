@@ -1,7 +1,7 @@
-name: 10-minute-cron
+name: fetch daily average at 00:00 GMT+7
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/10 12 * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
