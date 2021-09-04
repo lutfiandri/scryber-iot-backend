@@ -1,0 +1,12 @@
+name: fetch daily average at 00:00 GMT+7
+on:
+  schedule:
+    - cron: '0 14 * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call our API route
+        run: |
+          curl --request POST \
+          --url 'https://scryber-iot-backend.vercel.app/sensors/daily'
