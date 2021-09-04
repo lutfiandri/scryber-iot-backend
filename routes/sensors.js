@@ -25,14 +25,16 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/daily', async (req, res) => {
-  const today = new Date(); // 00:01 malam
-  const yesterdayEnd = new Date(
-    today -
-      today.getHours() * 60 * 60 * 1000 -
-      today.getMinutes() * 60 * 1000 -
-      today.getSeconds() * 1000 -
-      1000 // biar 23.59.59
-  );
+  // const today = new Date(); // 00:01 malam
+  // const yesterdayEnd = new Date(
+  //   today -
+  //     today.getHours() * 60 * 60 * 1000 -
+  //     today.getMinutes() * 60 * 1000 -
+  //     today.getSeconds() * 1000 -
+  //     1000 // biar 23.59.59 GMT0
+  // );
+
+  const yesterdayEnd = new Date();
   const yesterdayStart = new Date(yesterdayEnd - 24 * 60 * 60 * 1000);
 
   try {
@@ -71,15 +73,17 @@ router.post('/daily', async (req, res) => {
 });
 
 router.post('/weekly', async (req, res) => {
-  const today = new Date(); // 00:01 malam
-  const lastSundayEnd = new Date(
-    today -
-      (today.getDay() - 1) * 24 * 60 * 60 * 1000 -
-      today.getHours() * 60 * 60 * 1000 -
-      today.getMinutes() * 60 * 1000 -
-      today.getSeconds() * 1000 -
-      1000 // biar 23.59.59
-  );
+  // const today = new Date(); // 00:01 malam
+  // const lastSundayEnd = new Date(
+  //   today -
+  //     (today.getDay() - 1) * 24 * 60 * 60 * 1000 -
+  //     today.getHours() * 60 * 60 * 1000 -
+  //     today.getMinutes() * 60 * 1000 -
+  //     today.getSeconds() * 1000 -
+  //     1000 // biar 23.59.59
+  // );
+
+  const lastSundayEnd = new Date();
   const lastSundayStart = new Date(lastSundayEnd - 7 * 24 * 60 * 60 * 1000);
 
   try {
