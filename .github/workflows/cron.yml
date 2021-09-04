@@ -1,7 +1,7 @@
 name: fetch daily average at 00:00 GMT+7
 on:
   schedule:
-    - cron: '*/10 12 * * *'
+    - cron: '5 10 * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
