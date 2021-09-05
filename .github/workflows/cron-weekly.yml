@@ -1,7 +1,7 @@
 name: fetch weekny average at monday 00:00 GMT+7
 on:
   schedule:
-    - cron: '0 14 * * 0'
+    - cron: '0 17 * * 0'
 jobs:
   cron:
     runs-on: ubuntu-latest
